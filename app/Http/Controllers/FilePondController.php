@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilepondUploadRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
@@ -9,7 +10,7 @@ use Illuminate\Support\Str;
 
 class FilePondController extends Controller
 {
-    public function process(Request $request): Response|string
+    public function process(FilepondUploadRequest $request): Response|string
     {
         $file = $request->file('file');
 
