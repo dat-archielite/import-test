@@ -32,7 +32,7 @@ class FilePondController extends Controller
     public function chunk(Request $request): Response
     {
         $offset = $request->server('HTTP_UPLOAD_OFFSET');
-        $length = $request->server('HTTP_UPLOAD_LENGTH');
+        $length = (int) $request->server('HTTP_UPLOAD_LENGTH');
 
         $path = $request->query('patch');
 

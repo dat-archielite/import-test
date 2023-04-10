@@ -22,3 +22,12 @@ const pond = FilePond.create(document.querySelector('input'), {
     chunkUploads: true,
     chunkSize: 5000000,
 })
+
+document.addEventListener('FilePond:processfile', (e) => {
+    const serverId = e.detail.file.serverId
+
+    axios.post('/products/import', { serverId })
+        .then(response => {
+            console.log(response)
+        })
+})

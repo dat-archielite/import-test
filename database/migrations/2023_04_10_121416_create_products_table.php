@@ -18,7 +18,7 @@ return new class () extends Migration {
             $table->integer('stock')->default(0);
             $table->string('type')->nullable();
             $table->string('vendor')->nullable();
-            $table->string('description')->nullable();
+            $table->string('description', 500)->nullable();
             $table->string('status')->default(ProductStatus::Drafted->value);
             $table->timestamps();
         });
