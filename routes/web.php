@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FilePondController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'home')->name('home');
+
+Route::prefix('filepond')
+    ->name('filepond.')
+    ->controller(FilePondController::class)
+    ->group(function () {
+        Route::post('process', 'process')->name('process');
+        Route::patch('process', 'chunk')->name('chunk');
+        Route::delete('process', 'revert')->name('revert');
+    });
