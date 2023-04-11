@@ -3,6 +3,7 @@ import './bootstrap'
 import Alpine from 'alpinejs'
 import * as FilePond from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import { notify } from './utils'
 
 window.Alpine = Alpine
 
@@ -10,7 +11,7 @@ Alpine.start()
 
 FilePond.registerPlugin(FilePondPluginFileValidateType)
 
-const pond = FilePond.create(document.querySelector('input'), {
+FilePond.create(document.querySelector('input'), {
     credits: false,
     name: 'file',
     server: {
@@ -24,10 +25,14 @@ const pond = FilePond.create(document.querySelector('input'), {
 })
 
 document.addEventListener('FilePond:processfile', (e) => {
+    notify('Your CSV file has been uploaded successfully. Import products is in progress.', 'info')
+
     const serverId = e.detail.file.serverId
 
     axios.post('/products/import', { serverId })
         .then(response => {
-            console.log(response)
+            notify(response.data.message, 'success')
         })
 })
+
+

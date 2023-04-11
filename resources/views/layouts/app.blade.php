@@ -16,5 +16,7 @@
         <main>
             {{ $slot }}
         </main>
+
+        @include('partials.notify')
     </body>
 </html>
