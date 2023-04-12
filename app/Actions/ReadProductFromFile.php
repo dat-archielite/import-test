@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
-use App\DataObjects\ProductData;
+use App\ValueObjects\ProductData;
 use App\Enums\ProductStatus;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -17,21 +17,19 @@ class ReadProductFromFile
     public function handle(string $filePath): Collection
     {
         $collection = FastExcel::import($filePath, function (array $row) {
-            $product = ProductData::fromArray($row);
+            $product = new ProductData(
+                name: $row['Name'],
+                sku: $row['SKU'],
+                description: $row['Description'],
+                price: (float) $row['Price'],
+                stock: (int) $row['Stock'],
+                type: $row['Type'],
+                vendor: $row['Vendor'],
+                status: $row['Status'],
+                createdAt: $row['Created At'],
+            );
 
-            $data = [
-                'name' => $product->name,
-                'sku' => $product->sku,
-                'description' => $product->description,
-                'price' => $product->price,
-                'stock' => $product->stock,
-                'type' => $product->type,
-                'vendor' => $product->vendor,
-                'status' => $product->status,
-                'created_at' => $product->createdAt,
-            ];
-
-            $validator = Validator::make($data, [
+            $validator = Validator::make($product->toArray(), [
                 'name' => ['required', 'string', 'max:255'],
                 'sku' => ['required', 'string', 'max:255'],
                 'description' => ['nullable', 'string', 'max:500'],
@@ -47,7 +45,7 @@ class ReadProductFromFile
                 return null;
             }
 
-            return $data;
+            return $product->toArray();
         });
 
         Storage::delete($filePath);

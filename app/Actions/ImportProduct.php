@@ -13,7 +13,7 @@ class ImportProduct
     public function handle(Collection $collection): void
     {
         DB::transaction(function () use ($collection) {
-            $collection->chunk(10000)->each(function (Collection $chunk) {
+            $collection->chunk(5000)->each(function (Collection $chunk) {
                 Product::insert($chunk->toArray());
             });
         });
