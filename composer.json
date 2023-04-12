@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.5",
-        "laravel/framework": "^10.6.2",
+        "laravel/framework": "^10.7.1",
         "laravel/sanctum": "^3.2.1",
         "laravel/tinker": "^2.8.1",
         "rap2hpoutre/fast-excel": "*"
@@ -19,7 +19,7 @@
         "mockery/mockery": "^1.5.1",
         "nunomaduro/collision": "^7.4",
         "phpunit/phpunit": "^10.0.19",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.1"
     },
     "autoload": {
         "psr-4": {

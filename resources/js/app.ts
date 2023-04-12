@@ -5,7 +5,7 @@ import axios from 'axios'
 import * as FilePond from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import { notify } from './utils'
-import {FilePondFile} from "filepond";
+import { FilePondFile } from 'filepond'
 
 window.Alpine = Alpine
 
