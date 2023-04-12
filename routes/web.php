@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\FilePondController;
 use App\Http\Controllers\ImportProductController;
+use App\Http\Controllers\ShowProductListController;
 use App\Http\Controllers\TruncateProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'home')->name('home');
 
 Route::prefix('products')->name('products.')->group(function () {
+    Route::get('/', ShowProductListController::class)->name('index');
     Route::post('import', ImportProductController::class)->name('import');
     Route::delete('truncate', TruncateProductController::class)->name('truncate');
 });
