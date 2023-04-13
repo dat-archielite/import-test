@@ -1,7 +1,7 @@
 import './bootstrap'
 
 import Alpine from 'alpinejs'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import * as FilePond from 'filepond'
 import { FilePondFile, FilePondOptions } from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -11,10 +11,12 @@ import { Product } from '@/types'
 FilePond.registerPlugin(FilePondPluginFileValidateType)
 
 Alpine.data('products', () => ({
-    products: Array<Product>,
+    loading: false,
+    total: 0,
+    products: Array<Product>(),
 
-    init() {
-        axios.get('/products').then(response => this.products = response.data)
+    async init(): Promise<void> {
+        await this.getProducts()
 
         const csrfToken: string | null = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement).content
         const options: FilePondOptions = {
@@ -30,18 +32,55 @@ Alpine.data('products', () => ({
             chunkSize: 5000000,
         }
 
-        FilePond.create(document.querySelector('input') as HTMLInputElement, options)
+        const filepond: FilePond.FilePond = FilePond.create(document.querySelector('input') as HTMLInputElement, options)
 
         document.addEventListener('FilePond:processfile', (event: Event) => {
+            this.$dispatch('close')
+
+            filepond.removeFiles()
+
             notify('Your CSV file has been uploaded successfully. Import products is in progress.', 'info')
 
-            const file: FilePondFile = (<CustomEvent>event).detail.file
-
-            axios.post('/products/import', { serverId: file.serverId })
-                .then(response => {
-                    notify(response.data.message, 'success')
-                })
+            this.import(event)
         })
+    },
+
+    async truncate(): Promise<void> {
+        this.loading = true
+
+        const response: AxiosResponse<{ message: string }> = await axios.delete('/products/truncate')
+
+        this.products = []
+        this.total = 0
+        this.loading = false
+
+        this.$dispatch('close')
+        notify(response.data.message, 'success')
+    },
+
+    async getProducts(): Promise<void> {
+        this.loading = true
+
+        const response: AxiosResponse<object> = await axios.get('/products')
+
+        this.products = response.data
+        this.total = this.products.meta.total
+
+        this.loading = false
+    },
+
+    async import(event: Event): Promise<void> {
+        this.loading = true
+
+        const file: FilePondFile = (<CustomEvent>event).detail.file
+
+        const response: AxiosResponse<{ message: string }> = await axios.post('/products/import', { serverId: file.serverId })
+
+        this.loading = false
+
+        notify(response.data.message, 'success')
+
+        await this.getProducts()
     }
 }))
 
