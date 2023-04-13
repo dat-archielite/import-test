@@ -6,6 +6,7 @@ namespace App\Actions;
 
 use App\ValueObjects\ProductData;
 use App\Enums\ProductStatus;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,25 +26,9 @@ class ReadProductFromFile
                 stock: (int) $row['Stock'],
                 type: $row['Type'],
                 vendor: $row['Vendor'],
-                status: $row['Status'],
+                status: str($row['Status'])->lower()->toString(),
                 createdAt: $row['Created At'],
             );
-
-            $validator = Validator::make($product->toArray(), [
-                'name' => ['required', 'string', 'max:255'],
-                'sku' => ['required', 'string', 'max:255'],
-                'description' => ['nullable', 'string', 'max:500'],
-                'price' => ['required', 'numeric', 'min:0'],
-                'stock' => ['required', 'integer', 'min:0'],
-                'type' => ['nullable', 'string', 'max:255'],
-                'vendor' => ['nullable', 'string', 'max:255'],
-                'status' => ['required', 'string', Rule::enum(ProductStatus::class)],
-                'created_at' => ['required', 'date_format:Y-m-d H:i:s'],
-            ]);
-
-            if ($validator->fails()) {
-                return null;
-            }
 
             return $product->toArray();
         });
