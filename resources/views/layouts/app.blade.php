@@ -12,7 +12,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.ts'])
     </head>
-    <body class="bg-gray-50">
+    <body class="font-['figtree'] bg-gray-50">
         <main>
             {{ $slot }}
         </main>

@@ -1,4 +1,4 @@
-interface ResourceController<T> {
+interface ResourceCollection<T> {
     data: T[],
     links: {
         first: string,
@@ -37,4 +37,4 @@ enum ProductStatus {
     Inactive = 'inactive',
 }
 
-export { ResourceController, Product, ProductStatus }
+export { ResourceCollection, Product, ProductStatus }

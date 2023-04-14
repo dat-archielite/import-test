@@ -10,7 +10,7 @@
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Products') }}</h1>
-                    <p class="mt-2 text-sm text-gray-700">{!! __('You can manage your products here. Total: :total products', ['total' => '<span class="font-bold" x-text="formatNumber(total)"></span>']) !!}</p>
+                    <p class="mt-2 text-sm text-gray-700">{!! __('You can manage your products here. Total: :total products', ['total' => '<span class="font-bold" x-text="formatNumber(meta.total)"></span>']) !!}</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-2">
                     <x-button x-on:click="$dispatch('open-modal', 'import-product')" class="bg-sky-500 text-white hover:bg-sky-400 focus-visible:outline-sky-600">{{ __('Import Product') }}</x-button>
@@ -69,6 +69,14 @@
                                 </template>
                                 </tbody>
                             </table>
+
+                            <nav x-show="products.length" class="flex items-center justify-center border-t border-gray-200 px-4 pb-4">
+                                <div class="hidden md:-mt-px md:flex">
+                                    <template x-for="link in meta.links">
+                                        <a :href="link.url" @click.prevent="link.label !== '...' ? getProducts(link.url) : null" :class="{ 'border-sky-500 text-sky-600': link.active, 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': !link.active }" class="inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium" x-html="link.label"></a>
+                                    </template>
+                                </div>
+                            </nav>
                         </div>
                     </div>
                 </div>

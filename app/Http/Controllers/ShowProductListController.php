@@ -13,7 +13,7 @@ class ShowProductListController extends Controller
 {
     public function __invoke(Request $request): ResourceCollection
     {
-        $products = Product::query()->paginate();
+        $products = Product::query()->paginate()->onEachSide(2);
 
         return new ProductCollection($products);
     }
