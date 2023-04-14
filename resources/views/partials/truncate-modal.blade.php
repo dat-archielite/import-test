@@ -14,7 +14,7 @@
     </div>
     <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-3">
         <x-button x-on:click="truncate()" class="flex items-center bg-red-600 text-white hover:bg-red-500">
-            <x-icons.loading-spinner x-show="loading" />
+            <x-icon.loading-spinner x-show="loading" />
             {{ __('Truncate') }}
         </x-button>
         <x-button x-on:click="$dispatch('close')" class="bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">{{ __('Cancel') }}</x-button>

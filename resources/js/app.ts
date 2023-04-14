@@ -6,14 +6,15 @@ import * as FilePond from 'filepond'
 import { FilePondFile, FilePondOptions } from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import { notify } from './utils'
-import { Product } from '@/types'
+import {Product, ResourceController} from '@/types'
 
 FilePond.registerPlugin(FilePondPluginFileValidateType)
 
 Alpine.data('products', () => ({
     loading: false,
+    importing: false,
     total: 0,
-    products: Array<Product>(),
+    products: [],
 
     async init(): Promise<void> {
         await this.getProducts()
@@ -63,20 +64,22 @@ Alpine.data('products', () => ({
 
         const response: AxiosResponse<object> = await axios.get('/products')
 
-        this.products = response.data
-        this.total = this.products.meta.total
+        const { data, meta } = response.data as ResourceController<Product>
+
+        this.products = data
+        this.total = meta.total
 
         this.loading = false
     },
 
     async import(event: Event): Promise<void> {
-        this.loading = true
+        this.importing = true
 
         const file: FilePondFile = (<CustomEvent>event).detail.file
 
         const response: AxiosResponse<{ message: string }> = await axios.post('/products/import', { serverId: file.serverId })
 
-        this.loading = false
+        this.importing = false
 
         notify(response.data.message, 'success')
 

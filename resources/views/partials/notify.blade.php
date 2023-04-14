@@ -9,7 +9,7 @@
         }
     }"
     @notify.window="add($event)"
-    class="fixed bottom-0 right-0 flex flex-col w-full max-w-xs pb-4 pr-4 space-y-4 sm:justify-start"
+    class="z-20 fixed bottom-0 right-0 flex flex-col w-full max-w-xs pb-4 pr-4 space-y-4 sm:justify-start"
     role="status"
     aria-live="polite"
 >

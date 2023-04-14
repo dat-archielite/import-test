@@ -1,6 +1,6 @@
 <x-modal name="import-product">
     <h3 class="flex items-center gap-2 text-lg font-semibold">
-        <x-icons.arrow-up-tray class="w-5 h-5" />
+        <x-icon.arrow-up-tray class="w-5 h-5" />
         {{ __('Import Product') }}
     </h3>
     <p class="mt-1 text-sm text-gray-600">{{ __('Import product by upload CSV file.') }}</p>
