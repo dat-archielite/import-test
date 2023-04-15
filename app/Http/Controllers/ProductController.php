@@ -14,7 +14,10 @@ class ProductController extends Controller
 {
     public function index(): ResourceCollection
     {
-        $products = Product::query()->paginate()->onEachSide(2);
+        $products = Product::query()
+            ->latest('id')
+            ->paginate()
+            ->onEachSide(2);
 
         return new ProductCollection($products);
     }

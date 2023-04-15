@@ -10,7 +10,7 @@
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
                     <h1 class="text-base font-semibold leading-6 text-gray-900">{{ __('Products') }}</h1>
-                    <p class="mt-2 text-sm text-gray-700">{!! __('You can manage your products here. Total: :total products', ['total' => '<span class="font-bold" x-text="formatNumber(meta.total)"></span>']) !!}</p>
+                    <p class="mt-2 text-sm text-gray-700">{!! __('You can manage your products here. Total :total products', ['total' => '<span class="font-bold" x-text="formatNumber(meta.total)"></span>']) !!}</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-2">
                     <x-button x-on:click="$dispatch('open-modal', 'import-product')" class="bg-sky-500 text-white hover:bg-sky-400 focus-visible:outline-sky-600">{{ __('Import Product') }}</x-button>
@@ -27,6 +27,9 @@
                                 <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                        {{ __('ID') }}
+                                    </th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         {{ __('SKU') }}
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -46,7 +49,8 @@
                                     :key="product.id"
                                 >
                                     <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6" x-text="product.sku"></td>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6" x-text="product.id"></td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" x-text="product.sku"></td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" x-text="formatPrice(product.price)"></td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500" x-text="formatNumber(product.stock)"></td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
