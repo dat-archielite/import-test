@@ -1,7 +1,7 @@
 import './bootstrap'
 
 import Alpine from 'alpinejs'
-import axios, { AxiosResponse } from 'axios'
+import axios, {AxiosError, AxiosResponse} from 'axios'
 import * as FilePond from 'filepond'
 import { FilePondFile, FilePondOptions } from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -55,6 +55,8 @@ Alpine.data('products', () => ({
         this.meta = {}
         this.loading = false
 
+        this.getProducts()
+
         this.$dispatch('close')
         notify(response.data.message, 'success')
     },
@@ -77,13 +79,16 @@ Alpine.data('products', () => ({
 
         const file: FilePondFile = (<CustomEvent>event).detail.file
 
-        const response: AxiosResponse<{ message: string }> = await axios.post('/products/import', { serverId: file.serverId })
+        try {
+            const response: AxiosResponse<{ message: string }> = await axios.post('/products/import', { serverId: file.serverId })
 
-        this.importing = false
-
-        notify(response.data.message, 'success')
-
-        await this.getProducts()
+            notify(response.data.message, 'success')
+            await this.getProducts()
+        } catch (error: any) {
+            notify(error.response.data.message, 'error')
+        } finally {
+            this.importing = false
+        }
     }
 }))
 

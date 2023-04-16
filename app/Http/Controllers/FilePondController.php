@@ -35,7 +35,7 @@ class FilePondController extends Controller
 
         $path = $request->query('patch');
 
-        Storage::put("chunk/$path/patch.$offset", $request->getContent());
+        Storage::put("chunks/$path/$offset.part", $request->getContent());
 
         $this->mergeChunkFiles($path, $length);
 
@@ -57,7 +57,7 @@ class FilePondController extends Controller
     {
         $size = 0;
 
-        $chunks = Storage::files("chunk/$path");
+        $chunks = Storage::files("chunks/$path");
 
         foreach ($chunks as $file) {
             $size += Storage::size($file);
@@ -67,12 +67,16 @@ class FilePondController extends Controller
             return;
         }
 
+        usort($chunks, function ($a, $b) {
+            return (int) basename($a) <=> (int) basename($b);
+        });
+
         $data = '';
         foreach ($chunks as $file) {
             $data .= Storage::get($file);
         }
 
         Storage::put("$path.csv", $data, ['mimetype' => 'text/csv']);
-        Storage::deleteDirectory(dirname("chunk/$path", 2));
+        Storage::deleteDirectory(dirname("chunks/$path", 2));
     }
 }
