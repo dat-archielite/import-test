@@ -67,7 +67,7 @@ class FilePondController extends Controller
             return;
         }
 
-        usort($chunks, function ($a, $b) {
+        usort($chunks, function (string $a, string $b) {
             return (int) basename($a) <=> (int) basename($b);
         });
 

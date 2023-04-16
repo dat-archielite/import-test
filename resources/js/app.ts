@@ -1,7 +1,7 @@
 import './bootstrap'
 
 import Alpine from 'alpinejs'
-import axios, {AxiosError, AxiosResponse} from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import * as FilePond from 'filepond'
 import { FilePondFile, FilePondOptions } from 'filepond'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
