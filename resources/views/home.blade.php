@@ -60,7 +60,7 @@
                                 </template>
                                 <template x-if="!products.length">
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="5">
                                             <div class="max-w-xl mx-auto">
                                                 <div class="p-6 text-center">
                                                     <x-icon.inbox class="mx-auto h-12 w-12 text-gray-400" />
