@@ -31,10 +31,4 @@ interface Product {
     updated_at: string
 }
 
-
-enum ProductStatus {
-    Active = 'active',
-    Inactive = 'inactive',
-}
-
-export { ResourceCollection, Product, ProductStatus }
+export { ResourceCollection, Product }
