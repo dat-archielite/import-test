@@ -20,9 +20,9 @@ class ImportProductController extends Controller
         $filePath = str_contains($serverId, '.csv') ? $serverId : "$serverId.csv";
         $filePath = storage_path("app/$filePath");
 
-        $collection = $readProductFromFile->handle($filePath);
+        $collection = $readProductFromFile($filePath);
 
-        $importProduct->handle($collection);
+        $importProduct($collection);
 
         return response()->json(['message' => __('File imported successfully.')]);
     }

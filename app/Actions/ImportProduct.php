@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class ImportProduct
 {
-    public function handle(Collection $collection): void
+    public function __invoke(Collection $collection): void
     {
         DB::transaction(function () use ($collection) {
             $collection->chunk(5000)->each(function (Collection $chunk) {

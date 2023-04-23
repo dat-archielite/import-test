@@ -8,7 +8,7 @@ use App\Models\Product;
 
 class TruncateProduct
 {
-    public function handle(): void
+    public function __invoke(): void
     {
         Product::truncate();
     }

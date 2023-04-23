@@ -11,7 +11,7 @@ use Rap2hpoutre\FastExcel\Facades\FastExcel;
 
 class ReadProductFromFile
 {
-    public function handle(string $filePath): Collection
+    public function __invoke(string $filePath): Collection
     {
         $collection = FastExcel::import($filePath, function (array $row) {
             $product = new ProductData(
