@@ -14,7 +14,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('name');
             $table->string('sku');
-            $table->float('price', 10, 2);
+            $table->float('price', 10);
             $table->integer('stock')->default(0);
             $table->string('type')->nullable();
             $table->string('vendor')->nullable();

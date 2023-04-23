@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\ValueObjects;
 
-class ProductData
+use App\Contracts\DataTransferObject;
+
+class ProductData implements DataTransferObject
 {
     public function __construct(
         public string $name,
