@@ -8,7 +8,7 @@
         "@types/alpinejs": "^3.13.3",
         "alpinejs": "^3.13.2",
         "autoprefixer": "^10.4.16",
-        "axios": "^1.6.1",
+        "axios": "^1.6.2",
         "filepond": "^4.30.4",
         "filepond-plugin-file-validate-type": "^1.2.8",
         "laravel-vite-plugin": "^0.7.8",
